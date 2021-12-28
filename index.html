@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Video in AFrame</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/aframe/1.2.0/aframe.min.js"></script>
+
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/aframe/0.7.1/aframe.min.js"></script> -->
+
+        <script>
+            AFRAME.registerComponent('play-pause', {
+                init: function(){
+                    var myVideo = document.querySelector('#niceCity');
+                    var videoControls = document.querySelector('#videoControls');
+
+                    this.el.addEventListener('click', function(){
+                        console.log("myVideo.paused >>> "+ myVideo);
+                        if(myVideo.paused)
+                        {
+                            myVideo.play();
+                            videoControls.setAttribute('src', '#pause');
+                            console.log("Paused");
+                        }
+                        else
+                        {
+                            myVideo.pause();
+                            videoControls.setAttribute('src', '#play');
+                            console.log("Played");
+                        }
+                    })
+                }
+            });
+        </script>
+    </head>
+
+    <body>
+        <a-scene>
+            <!-- Asset Management System -->
+            <a-assets>
+                <img id="play" src="images/play_white.png">
+                <img id="pause" src="images/pause_white.png">
+                <!-- <video id="niceCity" src="videos/NYCTimewarp.mp4" loop="true"></video> -->
+                <video id="niceCity" loop="true" src="videos/LowWaterfallWithNiceCity.mp4"></video>
+            </a-assets>
+
+            <!-- Camera -->
+            <a-camera>
+                <a-cursor geometry="primitive: sphere; radius: 0.03"
+                        material="color: #FFFFFF;
+                                shader: flat;
+                                opacity: 0.5;"
+                        position="0 0 -1.5">>
+                </a-cursor>
+            </a-camera>
+
+            <!-- Method 1 -->
+            <!-- Sky -->
+            <!-- <a-sky id="video" src="#niceCity"></a-sky> -->
+            
+            <!-- Method 2 -->
+            <a-videosphere src="#niceCity"></a-videosphere>
+
+            <!-- Play/Pause Button -->
+            <a-image id="videoControls" src="#play" position="0 1.5 -2" scale="0.2 0.2" play-pause></a-image>
+
+        </a-scene>
+    </body>
+</html>
